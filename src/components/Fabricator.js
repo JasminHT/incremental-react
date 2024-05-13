@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useContext} from 'react'
 
 import useLocalStorage from '../hooks/useLocalStorage.js'
 import useInterval from '../hooks/useInterval.js'
@@ -6,11 +6,15 @@ import useInterval from '../hooks/useInterval.js'
 import Button from './Button.js'
 import LoadBar from './LoadBar.js'
 
+import ResourceContext from './ButtonBank.js';
 
-export default function Fabricator( {type, label, color, resources, setResources} ) {
+
+export default function Fabricator( {type, label, color} ) {
 
   const [progress, setProgress] = useLocalStorage(type+'_progress', 0);
   const [isBuilding, setBuilding] = useLocalStorage(type+'_building', false);
+  
+  const [resources, setResources] = useContext(ResourceContext);
 
   const totalProgress = 100;
 
@@ -25,12 +29,14 @@ export default function Fabricator( {type, label, color, resources, setResources
   }
 
   function start() {
-      setResources( (res) => ({...res, [cost[type].res]: res[cost[type].res]-cost[type].count})  );
-      setBuilding( true );
+    setResources( (res) => ({...res, [cost[type].res]: res[cost[type].res]-cost[type].count})  );
+    setBuilding( true );
   }
 
   function complete() {
+    setProgress( 0 ); 
     setResources( (res) => ({...res, [type]: res[type]+1})  );
+    setBuilding( false );
   }
 
 
@@ -39,8 +45,6 @@ export default function Fabricator( {type, label, color, resources, setResources
   function step() { 
 
     if (progress >= totalProgress) {
-      setProgress( 0 ); 
-      setBuilding( false );
       complete();
     }
 

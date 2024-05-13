@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react'
-
+import React, {useState, useEffect, createContext} from 'react'
 import useLocalStorage from '../hooks/useLocalStorage.js'
 
 import Button from './Button.js'
@@ -10,8 +9,8 @@ import {initialResources} from '../model/state.js';
 
 export default function ButtonBank () {
 
-  const [resources, setResources] = useLocalStorage("resources", initialResources)
-
+  const [resources, setResources] = useLocalStorage("resources", initialResources);
+  const ResourceContext = React.createContext();
 
   function reset() { 
     setResources(initialResources);
@@ -29,10 +28,11 @@ export default function ButtonBank () {
       <Button label="Cut Wood" value={resources.wood} onClick={get('wood')} />
       <Button label="Mine Stone" value={resources.stone} onClick={get('stone')} />
 
-      <Fabricator label='Grow a Farm' type='farm' color='green' resources={resources} setResources={setResources}/>
-      <Fabricator label='Build a House' type='house' color='brown' resources={resources} setResources={setResources}/>
-      <Fabricator label='Build a Wall' type='wall' color='red' resources={resources} setResources={setResources}/> 
-
+      <ResourceContext.Provider value={[resources, setResources]}>
+        <Fabricator label='Grow a Farm' type='farm' color='green' />
+        <Fabricator label='Build a House' type='house' color='brown' />
+        <Fabricator label='Build a Wall' type='wall' color='red' /> 
+      </ResourceContext.Provider>
     </>
   );
 };
