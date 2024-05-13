@@ -1,5 +1,5 @@
 import './App.css';
-import ButtonBank from './ButtonBank.js';
+import ButtonBank from '../components/ButtonBank.js';
 
 function App() {
   return (
