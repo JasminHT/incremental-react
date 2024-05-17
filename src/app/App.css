@@ -47,3 +47,23 @@
 .red {
   background-color: red;
 }
+
+.button, .counter,.loadBar {
+  display: inline-block;
+}
+
+
+.loadBar {
+  width: 200px;
+  padding: 0;
+  background: grey;
+  vertical-align: middle;
+}
+.progress {
+  height: 20px;
+  padding: 0;
+  margin: 0;
+  width: 40px;
+  background: lightgreen;
+  position: relative;
+}

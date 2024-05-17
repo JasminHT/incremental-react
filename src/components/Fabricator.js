@@ -1,44 +1,54 @@
-import React, {useContext} from 'react'
+import React, {useContext} from 'react';
 
-import useLocalStorage from '../hooks/useLocalStorage.js'
-import useInterval from '../hooks/useInterval.js'
+//import useLocalStorage from '../hooks/useLocalStorage.js';
+import useInterval from '../hooks/useInterval.js';
+import { useLocalStorage } from 'usehooks-ts'
 
-import Button from './Button.js'
-import LoadBar from './LoadBar.js'
+import { useResource, useResourceMax }  from '../hooks/useGameState.js';
 
-import ResourceContext from './ButtonBank.js';
+import Button from './Button.js';
+import Counter from './Counter.js';
+import LoadBar from './LoadBar.js';
+
+import cost from '../model/cost.js';
+import {ResourceContext} from './ButtonBank.js';
 
 
 export default function Fabricator( {type, label, color} ) {
 
-  const [progress, setProgress] = useLocalStorage(type+'_progress', 0);
-  const [isBuilding, setBuilding] = useLocalStorage(type+'_building', false);
-  
-  const [resources, setResources] = useContext(ResourceContext);
+  const [resource, addResource] = useResource(type);
+  const [resourceMax, addResourceMax] = useResourceMax(type);
+
+  const costCount = cost(type).count;
+  const costType = cost(type).res;
+  const [costResource, addCostResource] = useResource(costType);
+
+  const [progress, setProgress, removeProgress] = useLocalStorage(type+'_progress', 0);
+  const [isBuilding, setBuilding, removeBuilding] = useLocalStorage(type+'_building', false);
+
+
 
   const totalProgress = 100;
 
-  const cost = {
-    farm: {res: 'wood', count: 10},
-    house: {res: 'wood', count: 20},
-    wall: {res: 'stone', count: 10}
-  }
-
   function buttonDisabled() {
-    return resources[cost[type].res] < cost[type].count || isBuilding;
+    return  costResource < costCount || 
+            isBuilding || 
+            resource >= resourceMax; //ugly
   }
 
   function start() {
-    setResources( (res) => ({...res, [cost[type].res]: res[cost[type].res]-cost[type].count})  );
-    setBuilding( true );
+    //ugly
+    if (resourceMax >= resource + 1) {
+      addCostResource(-costCount);
+      setBuilding( true );
+    }
   }
 
   function complete() {
     setProgress( 0 ); 
-    setResources( (res) => ({...res, [type]: res[type]+1})  );
+    addResource(1);
     setBuilding( false );
   }
-
 
  
   useInterval(step, isBuilding ? 20 : null);
@@ -54,16 +64,10 @@ export default function Fabricator( {type, label, color} ) {
   }
 
   return (
-    <>
-      <Button 
-        label={label} 
-        disabled={buttonDisabled()} 
-        value={resources[type]} 
-        onClick={start} />
-
-      <LoadBar 
-        progress={progress}
-        totalProgress={totalProgress}
-        color={color}  />
-    </>
+    <div className='fabricator'>
+      <Counter value={resource} max={resourceMax} />
+      <Button text={label} disabled={buttonDisabled()} onClick={start} />
+      <LoadBar progress={progress} totalProgress={totalProgress} color={color}  />
+      <Button text={"Increase max"} disabled={false} onClick={()=>addResourceMax(1)} />
+    </div>
 )}

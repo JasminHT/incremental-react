@@ -1,15 +1,14 @@
 import React, {useState, useEffect} from 'react';
 
 
-export default function Button ({label, value, disabled, onClick }) {
+export default function Button ({text, disabled, onClick }) {
 
   return (
-      <div>
-        <label>{value} </label>
+      <div className='button'>
         <button disabled={disabled} onClick={onClick} >
-          {label}
+          {text}
         </button>
         <br/>
       </div>
   );
-};
+}
