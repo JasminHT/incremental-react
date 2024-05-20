@@ -19,7 +19,7 @@ export default function Miner( {type, color} ) {
   return (
     <div className="Miner">
       <Counter value={ resource } max={ resourceMax } />
-      <Button  text={"Get "+type} hoverText={ getCost(type) } onClick={()=>addResource(type, 1)} />
+      <Button  text={"Get "+type} hoverText={ getCost() } onClick={()=>addResource(1)} />
       <LoadBar progress={ resource } totalProgress={resourceMax} color={color} />
       <MaxButton type={type} />  
     </div>

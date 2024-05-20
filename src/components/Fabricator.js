@@ -20,7 +20,7 @@ export default function Fabricator( {type, label, color} ) {
 
   const [resource, addResource] = useResource(type);
   const [resourceMax, addResourceMax] = useResourceMax(type);
-  const [getCost, payCost, affordCost] = useCost();
+  const [getCost, payCost, affordCost] = useCost(type);
 
   const [progress, setProgress, removeProgress] = useLocalStorage(type+'_progress', 0);
   const [isBuilding, setBuilding, removeBuilding] = useLocalStorage(type+'_building', false);
@@ -28,7 +28,7 @@ export default function Fabricator( {type, label, color} ) {
   const totalProgress = 100;
 
   function buttonDisabled() {
-    if (!affordCost(type)) return true;
+    if (!affordCost()) return true;
     if (isBuilding) return true;
     if ( resource >= resourceMax ) return true;
 
@@ -37,14 +37,14 @@ export default function Fabricator( {type, label, color} ) {
 
   function start() {
     if (resourceMax >= resource + 1) {
-      payCost(type);
+      payCost();
       setBuilding( true );
     }
   }
 
   function complete() {
     setProgress( 0 ); 
-    addResource(type, 1);
+    addResource( 1 );
     setBuilding( false );
   }
 
@@ -57,23 +57,21 @@ export default function Fabricator( {type, label, color} ) {
       setProgress( progress+1 );
   }
 
-  if (isBuilding) {
-    return (
+
+  return (
     <div className='Fabricator'>
       <Counter value={resource} max={resourceMax} />
-      <BoostButton type={type} progress={progress} setProgress={setProgress}/>
+      { (isBuilding) ? 
+        <BoostButton type={type} progress={progress} setProgress={setProgress}/>
+      :
+        <Button text={label} hoverText={getCost()} disabled={buttonDisabled()} onClick={start} />
+      }
+      
       <LoadBar progress={progress} totalProgress={totalProgress} color={color}  />
       <MaxButton type={type} />  
-    </div>)
-  } else {
-    return (
-    <div className='Fabricator'>
-      <Counter value={resource} max={resourceMax} />
-      <Button text={label} hoverText={getCost(type)} disabled={buttonDisabled()} onClick={start} />
-      <LoadBar progress={progress} totalProgress={totalProgress} color={color}  />
-      <MaxButton type={type} />  
-    </div>)
-  }
+    </div>
+  )
+
 
 
 

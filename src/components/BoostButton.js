@@ -6,21 +6,21 @@ import Button from './Button.js';
 
 export default function BoostButton( {type, progress, setProgress} ) {
 
-  const [getBoostCost, payBoostCost, affordBoostCost] = useCost("boost");
+  const [getBoostCost, payBoostCost, affordBoostCost] = useCost(type, "boost");
 
   function buttonDisabled() {
-    if (!affordBoostCost(type)) return true;
+    if (!affordBoostCost()) return true;
     return false;
   }
 
   function boost() {
-    payBoostCost(type);
+    payBoostCost();
     setProgress( progress + 20 );
   }
 
   return (
     <div className="BoostButton Button">
-      <Button text={"Boost"} disabled={buttonDisabled()} hoverText={getBoostCost(type)} onClick={boost} />  
+      <Button text={"Boost"} disabled={buttonDisabled()} hoverText={getBoostCost()} onClick={boost} />  
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
+import { immer } from 'zustand/middleware/immer'
+
 
 import cost from '../model/cost.js'
 
@@ -11,7 +13,7 @@ export function useReset() {
 export function useResource(type) {
   return [
     useGameState((state) => state[type]),
-    useGameState((state) => state.addResource)
+    useGameState((state) => state.addResource(type))
     ];
 }
 
@@ -20,16 +22,16 @@ export function useResourceMax(type) {
     //useGameState((state) => state.getMax()),
     //the above code doesn't work. You need to directly refer to the variable to subscribe to it
     useGameState((state) => state[type+"_max"]),
-    useGameState((state) => state.addMax) 
+    useGameState((state) => state.addMax(type)) 
     ]
 }
 
 //The three functions below could be combined into a functio nthat takes another parameter
-export function useCost(suffix="") {
+export function useCost(type, suffix="") {
   return [ 
-    useGameState((state) => state.getCostString(suffix)),
-    useGameState((state) => state.payCost(suffix)),
-    useGameState((state) => state.affordCost(suffix))
+    useGameState((state) => state.getCostString(type, suffix)),
+    useGameState((state) => state.payCost(type, suffix)),
+    useGameState((state) => state.affordCost(type, suffix))
     ]
 }
 
@@ -37,6 +39,7 @@ export function useCost(suffix="") {
 
 const initialState = {
 
+  resource: 0, resource_max: {base: 100, increment: 20, bonuses: 0},
   energy: 0, energy_max: 100, 
   scrap_metal: 0, scrap_metal_max: 20,
   battery: 0, battery_max: 20, 
@@ -47,55 +50,61 @@ const initialState = {
 
 }
 
-export const useGameState = create(persist(
+export const useGameState = create(immer(persist(
 
   (set, get) => ({
     ...initialState,
 
     reset: function() {
-      set(initialState)
+      set((state)=>{state=initialState})
     },
 
-    addResource: function(type, count) { 
+    addResource: function(type) { 
+
+      return (count) => {
         let new_amount = get()[type] + count;
 
         if (new_amount > get()[type+"_max"]) {
-          set({ [type]:  get()[type+"_max"]})
+          set((state)=>{ state[type] =  get()[type+"_max"]})
         }
 
         else if (new_amount < 0 ) {
-          set({ [type]: 0 })
+          set((state)=>{ state[type] = 0 })
         }
 
         else {
-          set({ [type]: get()[type] + count })
+          set((state)=>{ state[type] = get()[type] + count })
         }
+      }
     },
 
-    addMax: function(type, count) {
-      set({ [type+"_max"]: get()[type+"_max"] + count })
+    addMax: function(type) {
+
+      return (count) => {
+        set((state) => {state[type+"_max"] = get()[type+"_max"] + count })
+      }
     },
 
 
 
-    payCost: function(suffix="") {
+    payCost: function(type, suffix="") {
       if (suffix)
         suffix="_"+suffix;
 
-      return function(type) {
-      
+      return () => {
         for (const [cost_type, cost_count] of Object.entries(cost(type+suffix))) {
-          set({ [cost_type]: Math.max(0, get()[cost_type] - cost_count) })
+          set((state) => { state[cost_type] = Math.max(0, get()[cost_type] - cost_count) } );
+          //set({ [cost_type]: Math.max(0, get()[cost_type] - cost_count) })
         }
       }
 
     },
 
-    affordCost: function(suffix="") {
+    affordCost: function(type, suffix="") {
       if (suffix)
         suffix="_"+suffix;
 
-      return function(type) {
+      return () => {
         if (!cost(type+suffix)) return false;      
         for (const [cost_type, cost_count] of Object.entries(cost(type+suffix))) {
           if (get()[cost_type] < cost_count)
@@ -105,11 +114,11 @@ export const useGameState = create(persist(
       }
     },
 
-    getCostString: function(suffix="") {
+    getCostString: function(type, suffix="") {
       if (suffix)
         suffix="_"+suffix;
 
-      return function(type) {
+      return () => {
         let cost_string = "";
         if (!cost(type+suffix)) return "";        
         for (const [cost_type, cost_count] of Object.entries(cost(type+suffix))) {
@@ -131,4 +140,4 @@ export const useGameState = create(persist(
     storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
   },
 
-))
+)))

@@ -18,18 +18,19 @@ export default function ButtonBank () {
   let crankbots = useGameState((state) => state.crankbot);
   let solar_panels = useGameState((state) => state.solar_panel);
   let scrap_generators = useGameState((state) => state.scrap_generator);
-  let addResource = useGameState((state) => state.addResource);
+  
+  let addScrapMetal = useGameState((state) => state.addResource('scrap_metal'));
+  let addEnergy = useGameState((state) => state.addResource('energy'));
 
   useInterval(step, 1000);
   function step() { 
-    addResource('food', farms);
-    addResource('energy', Math.ceil(crankbots))
-    addResource('scrap_metal', Math.ceil(scrap_generators))
+    addEnergy(Math.ceil(crankbots))
+    addScrapMetal(Math.ceil(scrap_generators))
   }
 
   useInterval(tinyStep, 100);
   function tinyStep() { 
-    addResource('energy', Math.ceil(solar_panels))
+    addEnergy( Math.ceil(solar_panels))
   }
 
   return (
