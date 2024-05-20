@@ -1,34 +1,50 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
+import cost from '../model/cost.js'
+
 
 export function useReset() {
   return useGameState((state) => state.reset)
 }
 
 export function useResource(type) {
-  
-  let resource = useGameState((state) => state[type]);
-  let addResource = useGameState((state) => state.addCapped(type));
-
-  return [resource, addResource];
+  return [
+    useGameState((state) => state[type]),
+    useGameState((state) => state.addResource)
+    ];
 }
 
 export function useResourceMax(type) {
-  
-  return [ useGameState((state) => state[type+"_max"]),
-           useGameState((state) => state.addMax(type)) ]
+  return [ 
+    //useGameState((state) => state.getMax()),
+    //the above code doesn't work. You need to directly refer to the variable to subscribe to it
+    useGameState((state) => state[type+"_max"]),
+    useGameState((state) => state.addMax) 
+    ]
+}
+
+//The three functions below could be combined into a functio nthat takes another parameter
+export function useCost(suffix="") {
+  return [ 
+    useGameState((state) => state.getCostString(suffix)),
+    useGameState((state) => state.payCost(suffix)),
+    useGameState((state) => state.affordCost(suffix))
+    ]
 }
 
 
-const initialState = {
-  food: 0, food_max: 10,
-  wood: 0, wood_max: 10,
-  stone: 0, stone_max: 20,
 
-  farm: 0, farm_max: 5,
-  house: 0, house_max: 5,
-  wall: 0, wall_max: 5,
+const initialState = {
+
+  energy: 0, energy_max: 100, 
+  scrap_metal: 0, scrap_metal_max: 20,
+  battery: 0, battery_max: 20, 
+  crankbot: 50, crankbot_max: 100,
+  duranium: 0, duranium_max: 20,
+  solar_panel: 0, solar_panel_max: 10,
+  scrap_generator: 0, scrap_generator_max: 10,
+
 }
 
 export const useGameState = create(persist(
@@ -36,14 +52,11 @@ export const useGameState = create(persist(
   (set, get) => ({
     ...initialState,
 
-    add: (type, count) => set({ [type]: get()[type] + count }),
-
-    addMax: (type) => {
-      return (count) => set({ [type+"_max"]: get()[type+"_max"] + count })
+    reset: function() {
+      set(initialState)
     },
 
-    addCapped: (type) => { 
-      return (count) => {
+    addResource: function(type, count) { 
         let new_amount = get()[type] + count;
 
         if (new_amount > get()[type+"_max"]) {
@@ -57,14 +70,59 @@ export const useGameState = create(persist(
         else {
           set({ [type]: get()[type] + count })
         }
+    },
+
+    addMax: function(type, count) {
+      set({ [type+"_max"]: get()[type+"_max"] + count })
+    },
+
+
+
+    payCost: function(suffix="") {
+      if (suffix)
+        suffix="_"+suffix;
+
+      return function(type) {
+      
+        for (const [cost_type, cost_count] of Object.entries(cost(type+suffix))) {
+          set({ [cost_type]: Math.max(0, get()[cost_type] - cost_count) })
+        }
+      }
+
+    },
+
+    affordCost: function(suffix="") {
+      if (suffix)
+        suffix="_"+suffix;
+
+      return function(type) {
+        if (!cost(type+suffix)) return false;      
+        for (const [cost_type, cost_count] of Object.entries(cost(type+suffix))) {
+          if (get()[cost_type] < cost_count)
+            return false;
+        }
+        return true;
       }
     },
 
-    reset: () => {
-      set(initialState)
-    },
+    getCostString: function(suffix="") {
+      if (suffix)
+        suffix="_"+suffix;
 
-      
+      return function(type) {
+        let cost_string = "";
+        if (!cost(type+suffix)) return "";        
+        for (const [cost_type, cost_count] of Object.entries(cost(type+suffix))) {
+          cost_string = cost_string+cost_type+": "+cost_count+", ";
+        }
+        return cost_string;
+      }
+    }
+
+
+
+
+
   }),
 
   //options

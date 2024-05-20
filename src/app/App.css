@@ -48,13 +48,28 @@
   background-color: red;
 }
 
-.button, .counter,.loadBar {
+.Button, .LoadBar {
   display: inline-block;
 }
 
+.Counter {
+  display: inline-block;
+  width: 4em;
+  background: lightgrey;
+  padding: 3px;
+  text-align: center;
+}
 
-.loadBar {
-  width: 200px;
+.Button {
+  display: inline-block;
+}
+
+.Button button {
+    width: 8em;
+    border-radius: 5px;
+}
+
+.LoadBar {
   padding: 0;
   background: grey;
   vertical-align: middle;
@@ -63,7 +78,19 @@
   height: 20px;
   padding: 0;
   margin: 0;
-  width: 40px;
   background: lightgreen;
   position: relative;
+  max-width: 100px;
+}
+
+.Hint {
+  background: lightgrey;
+  padding: 0 1em;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.Hint p {
+  padding: 0;
+  margin: 5px 0;
 }

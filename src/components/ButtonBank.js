@@ -3,22 +3,33 @@ import React, {useState, useEffect, createContext} from 'react';
 import useInterval from '../hooks/useInterval.js';
 
 import Button from './Button.js';
-import Counter from './Counter.js';
 import Fabricator from './Fabricator.js';
 import Miner from './Miner.js';
-import LoadBar from './LoadBar.js';
+import Hint from './Hint.js'
 
-import {useReset, useResource} from '../hooks/useGameState.js';
+import {useReset, useGameState} from '../hooks/useGameState.js';
+
 
 export default function ButtonBank () {
 
-  const reset = useReset();
-  const [food, addFood] = useResource('food')
-  const [farmCount, addFarms] = useResource('farm')
+  const reset = useGameState((state) => state.reset);
+
+  let farms = useGameState((state) => state.farm);
+  let crankbots = useGameState((state) => state.crankbot);
+  let solar_panels = useGameState((state) => state.solar_panel);
+  let scrap_generators = useGameState((state) => state.scrap_generator);
+  let addResource = useGameState((state) => state.addResource);
 
   useInterval(step, 1000);
   function step() { 
-    addFood(farmCount);
+    addResource('food', farms);
+    addResource('energy', Math.ceil(crankbots))
+    addResource('scrap_metal', Math.ceil(scrap_generators))
+  }
+
+  useInterval(tinyStep, 100);
+  function tinyStep() { 
+    addResource('energy', Math.ceil(solar_panels))
   }
 
   return (
@@ -26,13 +37,16 @@ export default function ButtonBank () {
         <Button text="Reset" onClick={reset} />
         <br/>
 
-        <Miner type="food" color="blue" />
-        <Miner type="wood" color="blue" />
-        <Miner type="stone" color="blue" />
+        <Miner type="energy" color="blue" />
 
-        <Fabricator label='Grow a Farm' type='farm' color='green' />
-        <Fabricator label='Build a House' type='house' color='brown' />
-        <Fabricator label='Build a Wall' type='wall' color='red' /> 
+        <Fabricator label='Scrap metal' type='scrap_metal' color='lightgrey' />
+        <Fabricator label='Battery' type='battery' color='white' />
+        <Fabricator label='Crankbots' type='crankbot' color='orange' />
+        <Fabricator label='Duranium' type='duranium' color='purple' /> 
+        <Fabricator label='Solar panels' type='solar_panel' color='red' />    
+        <Fabricator label='Scrap generator' type='scrap_generator' color='black' />      
+
+        <Hint />
     </>
   );
 };
