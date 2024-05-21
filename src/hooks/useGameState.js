@@ -41,7 +41,7 @@ const initialState = {
   energy: 0, energy_max: 100, 
   scrap_metal: 0, scrap_metal_max: 20,
   battery: 0, battery_max: 20, 
-  crankbot: 5, crankbot_max: 100,
+  crankbot: 1, crankbot_max: 100,
   duranium: 0, duranium_max: 20,
   solar_panel: 0, solar_panel_max: 10,
   scrap_generator: 0, scrap_generator_max: 10,
