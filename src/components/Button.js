@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useRef} from 'react';
 
 import { useHover } from 'usehooks-ts';
 import { useHoverText } from '../hooks/useHoverText.js'

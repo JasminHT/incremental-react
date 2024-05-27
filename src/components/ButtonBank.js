@@ -1,4 +1,4 @@
-import React, {useState, useEffect, createContext} from 'react';
+import React from 'react';
 
 import useInterval from 'hooks/useInterval.js';
 
@@ -7,20 +7,19 @@ import Fabricator from './Fabricator.js';
 import Miner from './Miner.js';
 import Hint from './Hint.js'
 
-import {useReset, useResource, useGameState} from 'hooks/useGameState.js';
+import {useResource, useGameState} from 'hooks/useGameState.js';
 
 
 export default function ButtonBank () {
 
   const reset = useGameState((state) => state.reset);
 
-  let farms = useGameState((state) => state.farm);
   let crankbots = useGameState((state) => state.crankbot);
   let solar_panels = useGameState((state) => state.solar_panel);
   let scrap_generators = useGameState((state) => state.scrap_generator);
   
-  let [scrap_metal, addScrapMetal] = useResource('scrap_metal');
-  let [energy, addEnergy] = useResource('energy');
+  let addScrapMetal = useGameState((state) => state.addResource('scrap_metal'))
+  let addEnergy = useGameState((state) => state.addResource('energy'))
 
   useInterval(step, 1000);
   function step() { 

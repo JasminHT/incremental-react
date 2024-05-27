@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react';
+import React from 'react';
 
 import { useResource, useResourceMax, useGameState }  from '../hooks/useGameState.js';
 
@@ -6,8 +6,6 @@ import Button from './Button.js';
 import Counter from './Counter.js';
 import LoadBar from './LoadBar.js';
 import MaxButton from './MaxButton.js'
-
-import cost from '../model/cost.js';
 
 export default function Miner( {type, color} ) {
 

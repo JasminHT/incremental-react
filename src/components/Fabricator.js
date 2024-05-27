@@ -12,10 +12,6 @@ import LoadBar from './LoadBar.js';
 import MaxButton from './MaxButton.js'
 import BoostButton from './BoostButton.js'
 
-import cost from '../model/cost.js';
-import {ResourceContext} from './ButtonBank.js';
-
-
 export default function Fabricator( {type, label, color} ) {
 
   const [resource, addResource] = useResource(type);

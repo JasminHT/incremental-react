@@ -1,8 +1,8 @@
-import React, {useContext, useRef} from 'react';
+import React from 'react';
 
-import { useHoverText, useGetHoverText } from '../hooks/useHoverText.js'
+import { useHoverText } from '../hooks/useHoverText.js'
 
-export default function Miner( {type, color} ) {
+export default function Hint() {
 
   const {hoverText, setText} = useHoverText();
 
