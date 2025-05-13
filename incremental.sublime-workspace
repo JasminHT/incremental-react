@@ -43,6 +43,84 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "src/hooks/useGameState.js",
+			"redo_stack":
+			[
+				[
+					24,
+					1,
+					"paste",
+					null,
+					"AQAAAAMBAAAAAAAAAwEAAAAAAABYAAAAZXhwb3J0IGZ1bmN0aW9uIHVzZVJlc291cmNlKHR5cGUpIHsKICByZXR1cm4gWwogICAgdXNlR2FtZVN0YXRlKChzdGF0ZSkgPT4gc3RhdGVbdHlwZV0pLA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAFsBAAAAAAAAWwEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					23,
+					1,
+					"insert",
+					{
+						"characters": "\n"
+					},
+					"AQAAAAIBAAAAAAAAAgEAAAAAAAABAAAACg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAAMBAAAAAAAAAwEAAAAAAAAAAAAAAADwvw"
+				]
+			],
+			"settings":
+			{
+				"buffer_size": 3071,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			},
+			"undo_stack":
+			[
+				[
+					7,
+					1,
+					"insert",
+					{
+						"characters": "\n\n"
+					},
+					"AgAAAMcCAAAAAAAAyAIAAAAAAAAAAAAAyAIAAAAAAADJAgAAAAAAAAAAAAA",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAMcCAAAAAAAAxwIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					11,
+					7,
+					"right_delete",
+					null,
+					"BwAAAM4BAAAAAAAAzgEAAAAAAACKAAAAICAgIC8vdXNlR2FtZVN0YXRlKChzdGF0ZSkgPT4gc3RhdGUuZ2V0TWF4KCkpLAogICAgLy90aGUgYWJvdmUgY29kZSBkb2Vzbid0IHdvcmsuIFlvdSBuZWVkIHRvIGRpcmVjdGx5IHJlZmVyIHRvIHRoZSB2YXJpYWJsZSB0byBzdWJzY3JpYmUgzgEAAAAAAADOAQAAAAAAAAEAAAB0zgEAAAAAAADOAQAAAAAAAAEAAABvzgEAAAAAAADOAQAAAAAAAAEAAAAgzgEAAAAAAADOAQAAAAAAAAEAAABpzgEAAAAAAADOAQAAAAAAAAEAAAB0zgEAAAAAAADOAQAAAAAAAAEAAAAK",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAFgCAAAAAAAAzgEAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					14,
+					2,
+					"left_delete",
+					null,
+					"AgAAADkCAAAAAAAAOQIAAAAAAAABAAAACjgCAAAAAAAAOAIAAAAAAAABAAAACg",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAADoCAAAAAAAAOgIAAAAAAAAAAAAAAADwvw"
+				],
+				[
+					17,
+					2,
+					"left_delete",
+					null,
+					"AgAAADkCAAAAAAAAOQIAAAAAAABaAAAALy9UaGUgdGhyZWUgZnVuY3Rpb25zIGJlbG93IGNvdWxkIGJlIGNvbWJpbmVkIGludG8gYSBmdW5jdGlvIG50aGF0IHRha2VzIGFub3RoZXIgcGFyYW1ldGVyOAIAAAAAAAA4AgAAAAAAAAEAAAAK",
+					"AwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8AAAAAAQAAAJMCAAAAAAAAOQIAAAAAAAAAAAAAAADwvw"
+				]
+			]
+		},
+		{
+			"file": "/D/Downloads/H5P.Jeopardy/h5p.json",
+			"settings":
+			{
+				"buffer_size": 596,
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+			]
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -177,6 +255,7 @@
 	],
 	"file_history":
 	[
+		"/C/Users/bla/AppData/Local/Temp/7zO802C4AFB/h5p.json",
 		"/C/Users/bla/AppData/Local/Temp/scp54695/hyperactive.ca/apps/frontend/modules/examp/actions/actions.class.php",
 		"/C/Users/bla/AppData/Local/Temp/scp53910/hyperactive.ca/apps/frontend/modules/examp/templates/_exampFeatureContent.php",
 		"/C/Users/bla/AppData/Local/Temp/scp04878/hyperactive.ca/lib/model/doctrine/base/BaseExampleMedia.class.php",
@@ -303,12 +382,11 @@
 		"/C/Users/bla/AppData/Local/Temp/scp38865/home/jasht1/www/buscouncil/includes/global-functions.php",
 		"/C/Users/bla/AppData/Local/Temp/scp40253/home/mcpcc-bus/public_html/metasite/cooler-menu-backup/metaheader.php",
 		"/C/Users/bla/AppData/Local/Temp/scp16207/home/jasht1/busgurus_private/runtime/lib/propel/util/BasePeer.php",
-		"/C/Users/bla/AppData/Local/Temp/scp14308/home/jasht1/busgurus_private/apps/frontend/lib/helper/UrlHelper.php",
-		"/C/Users/bla/AppData/Local/Temp/scp08990/home/jasht1/busgurus_private/vendor/lexpress/symfony1/lib/util/sfFinder.class.php"
+		"/C/Users/bla/AppData/Local/Temp/scp14308/home/jasht1/busgurus_private/apps/frontend/lib/helper/UrlHelper.php"
 	],
 	"find":
 	{
-		"height": 41.3333333333
+		"height": 29.3333333333
 	},
 	"find_in_files":
 	{
@@ -539,6 +617,65 @@
 		{
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "src/hooks/useGameState.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3071,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								559,
+								559
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/JS Custom/Syntaxes/React.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 300.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/D/Downloads/H5P.Jeopardy/h5p.json",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 596,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								588,
+								588
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JSON/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
 			]
 		}
 	],

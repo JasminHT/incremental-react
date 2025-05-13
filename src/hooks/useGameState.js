@@ -17,14 +17,11 @@ export function useResource(type) {
 
 export function useResourceMax(type) {
   return [ 
-    //useGameState((state) => state.getMax()),
-    //the above code doesn't work. You need to directly refer to the variable to subscribe to it
     useGameState((state) => state[type+"_max"]),
     useGameState((state) => state.addMax(type)) 
     ]
 }
 
-//The three functions below could be combined into a functio nthat takes another parameter
 export function useCost(type, suffix="") {
   return [ 
     useGameState((state) => state.getCostString(type, suffix)),
@@ -87,19 +84,29 @@ export const useGameState = create(immer(persist(
 
     },
 
+
     affordCost: function(type, suffix="") {
-      
+    
       suffix = suffix ? "_"+suffix : ""
+
+      let can_afford = true; //changes to false if the price is too high
 
       return () => {      
         let costob = cost(type+suffix) || ""; 
-        if (!costob) 
-          return false;       
+
+        if (!costob) {
+          can_afford = false;
+        }     
+
+        //you cannot return from inside a forEach!!!
+        console.log("checking the cost");
         Object.entries(costob).forEach( ([cost_type, cost_count]) => {
-          if (get()[cost_type] < cost_count)
-            return false;
+          if (get()[cost_type] < cost_count) {
+            can_afford = false;
+          }
         })
-        return true;
+
+        return can_afford;
       }
     },
 
