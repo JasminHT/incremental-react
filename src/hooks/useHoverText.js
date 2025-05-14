@@ -6,9 +6,10 @@ export const useHoverText = create(
 
   (set, get) => ({
     hoverText: "no text yet",
-    setHoverText: (text) => {
+    hoverColor: 'black',
+    setHoverText: (text, color) => {
       clearTimeout(clearTimeoutId);
-      set({hoverText: "Cost: "+text});
+      set({hoverText: "Cost: "+text, hoverColor: color});
     },
     clearHoverText: () => {
       clearTimeout(clearTimeoutId);

@@ -4,11 +4,11 @@ import { useHoverText } from '../hooks/useHoverText.js'
 
 export default function Hint() {
 
-  const {hoverText, setText} = useHoverText();
+  const {hoverText, hoverColor} = useHoverText();
 
   return (
     <div className="Hint">
-      <p>{hoverText}</p>
+      <p style={{color:hoverColor}}>{hoverText}</p>
     </div>
   );
 }
