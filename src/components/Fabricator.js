@@ -1,25 +1,28 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 
 //import useLocalStorage from '../hooks/useLocalStorage.js';
 import useInterval from '../hooks/useInterval.js';
 import { useLocalStorage } from 'usehooks-ts'
 
-import { useResource, useResourceMax, useCost, useGameState }  from '../hooks/useGameState.js';
+import { useResource, useResourceMax, useCost, useWholeState }  from '../hooks/useGameState.js';
 
 import Button from './Button.js';
 import Counter from './Counter.js';
 import LoadBar from './LoadBar.js';
 import MaxButton from './MaxButton.js'
 import BoostButton from './BoostButton.js'
+import Toggle from './Toggle.js'
 
 export default function Fabricator( {type, label, color} ) {
 
   const [resource, addResource] = useResource(type);
   const [resourceMax, addResourceMax] = useResourceMax(type);
   const [getCost, payCost, affordCost] = useCost(type);
+  const [gameState] = useWholeState();
 
   const [progress, setProgress, removeProgress] = useLocalStorage(type+'_progress', 0);
   const [isBuilding, setBuilding, removeBuilding] = useLocalStorage(type+'_building', false);
+  const [autoFabricate, setAutoFabricate] = useLocalStorage(type+'_auto', false);
 
   const totalProgress = 100;
 
@@ -39,10 +42,17 @@ export default function Fabricator( {type, label, color} ) {
   }
 
   function complete() {
+    //finish
     setProgress( 0 ); 
     addResource( 1 );
     setBuilding( false );
   }
+
+  useEffect(() => {
+    if (autoFabricate && !buttonDisabled()) {
+      start();
+    }
+  }, [autoFabricate, isBuilding, resource, resourceMax, gameState]);
 
  
   useInterval(step, isBuilding ? 20 : null);
@@ -79,7 +89,8 @@ export default function Fabricator( {type, label, color} ) {
         totalProgress={totalProgress} 
         color={color}  />
 
-      <MaxButton type={type} />  
+      <MaxButton type={type} /> 
+      <Toggle onToggle={setAutoFabricate} initialChecked={autoFabricate}/> 
     </div>
   )
 

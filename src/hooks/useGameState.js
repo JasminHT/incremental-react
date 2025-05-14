@@ -30,6 +30,10 @@ export function useCost(type, suffix="") {
     ]
 }
 
+export function useWholeState() {
+  return [useGameState((state) => state.getWholeState())];
+}
+
 
 
 const initialState = {
@@ -52,6 +56,10 @@ export const useGameState = create(immer(persist(
 
     reset: function() {
       set(initialState)
+    },
+
+    getWholeState: function() {
+      return get();
     },
 
     addResource: function(type) { 
