@@ -99,7 +99,6 @@ export const useGameState = create(immer(persist(
         }     
 
         //you cannot return from inside a forEach!!!
-        console.log("checking the cost");
         Object.entries(costob).forEach( ([cost_type, cost_count]) => {
           if (get()[cost_type] < cost_count) {
             can_afford = false;
