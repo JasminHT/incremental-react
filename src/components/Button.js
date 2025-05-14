@@ -1,13 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 
 import { useHover } from 'usehooks-ts';
-import { useSetHoverText, useClearHoverText } from '../hooks/useHoverText.js'
+import { useHoverText } from '../hooks/useHoverText.js'
 
 
 export default function Button ({text, disabled, hoverText, onClick }) {
 
-  const setHoverText = useSetHoverText();
-  const clearHoverText = useClearHoverText();
+  const {setHoverText, clearHoverText} = useHoverText();
 
   const hoverRef = useRef(null)
   const isHover = useHover(hoverRef)
