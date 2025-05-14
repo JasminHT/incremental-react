@@ -24,7 +24,7 @@ export function useResourceMax(type) {
 
 export function useCost(type, suffix="") {
   return [ 
-    useGameState((state) => state.getCostString(type, suffix)),
+    useGameState((state) => state.getCost(type, suffix)),
     useGameState((state) => state.payCost(type, suffix)),
     useGameState((state) => state.affordCost(type, suffix))
     ]
@@ -114,6 +114,16 @@ export const useGameState = create(immer(persist(
         })
 
         return can_afford;
+      }
+    },
+
+    getCost: function(type, suffix="") {
+      if (suffix)
+        suffix="_"+suffix;
+
+      return () => {
+        let cost_object = cost(type+suffix) || {};        
+        return cost_object;
       }
     },
 

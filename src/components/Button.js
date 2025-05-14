@@ -1,12 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 
 import { useHover } from 'usehooks-ts';
-import { useHoverText } from '../hooks/useHoverText.js'
+import { useHoverCost } from '../hooks/useHoverCost.js'
 
 
-export default function Button ({disabled, hoverText, onClick, children}) {
+export default function Button ({disabled, hoverCost, onClick, children}) {
 
-  const {setHoverText, clearHoverText} = useHoverText();
+  const {setHoverCost, clearHoverCost} = useHoverCost();
 
   const hoverRef = useRef(null)
   const isHover = useHover(hoverRef)
@@ -16,10 +16,10 @@ export default function Button ({disabled, hoverText, onClick, children}) {
   //detecting mouse hovers and leaves
   useEffect(() => {
     if (isHover)
-      setHoverText(hoverText, hoverColor);
+      setHoverCost(hoverCost, hoverColor);
     else
-      clearHoverText();
-  }, [isHover, hoverText] );
+      clearHoverCost();
+  }, [isHover, hoverCost] );
 
   //buttons can be disabled
   return (
