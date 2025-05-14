@@ -4,7 +4,7 @@ import { useHover } from 'usehooks-ts';
 import { useHoverCost } from '../hooks/useHoverCost.js'
 
 
-export default function Button ({disabled, hoverCost, onClick, children}) {
+export default function Button ({type, disabled, hoverCost, onClick, children}) {
 
   const {setHoverCost, clearHoverCost} = useHoverCost();
 
@@ -16,7 +16,7 @@ export default function Button ({disabled, hoverCost, onClick, children}) {
   //detecting mouse hovers and leaves
   useEffect(() => {
     if (isHover)
-      setHoverCost(hoverCost, hoverColor);
+      setHoverCost(type, hoverCost, hoverColor);
     else
       clearHoverCost();
   }, [isHover, hoverCost] );

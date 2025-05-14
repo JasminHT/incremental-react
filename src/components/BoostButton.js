@@ -20,7 +20,7 @@ export default function BoostButton( {type, progress, setProgress} ) {
 
   return (
     <div className="BoostButton Button">
-      <Button disabled={buttonDisabled()} hoverCost={getBoostCost()} onClick={boost}>
+      <Button type={type} disabled={buttonDisabled()} hoverCost={getBoostCost()} onClick={boost}>
         Boost
       </Button>  
     </div>

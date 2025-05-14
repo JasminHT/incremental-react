@@ -22,7 +22,7 @@ export default function MaxButton( {type} ) {
 
   return (
     <div className="IncreaseMax Button">
-      <Button disabled={buttonDisabled()} hoverCost={ getMaxCost() } onClick={()=>increaseMax()} >
+      <Button type={type} disabled={buttonDisabled()} hoverCost={ getMaxCost() } onClick={()=>increaseMax()} >
         "Increase max"
       </Button>  
     </div>

@@ -30,6 +30,12 @@ export function useCost(type, suffix="") {
     ]
 }
 
+export function usePartialCost(type, resource, suffix="") {
+  return [
+    useGameState((state) => state.affordPartialCost(type,resource,suffix))
+  ]
+}
+
 export function useWholeState() {
   return [useGameState((state) => state.getWholeState())];
 }
@@ -42,7 +48,7 @@ const initialState = {
   energy: 0, energy_max: 100, 
   scrap_metal: 0, scrap_metal_max: 20,
   battery: 0, battery_max: 20, 
-  crankbot: 1, crankbot_max: 100,
+  crankbot: 1, crankbot_max: 10,
   duranium: 0, duranium_max: 20,
   solar_panel: 0, solar_panel_max: 10,
   scrap_generator: 0, scrap_generator_max: 10,
@@ -92,6 +98,16 @@ export const useGameState = create(immer(persist(
 
     },
 
+    affordPartialCost: function(type, resource, suffix="") {
+      suffix = suffix ? "_"+suffix : ""
+      let costob = cost(type+suffix) || ""; 
+
+      if (get()[resource] >= costob[resource] ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
 
     affordCost: function(type, suffix="") {
     
@@ -108,7 +124,7 @@ export const useGameState = create(immer(persist(
 
         //you cannot return from inside a forEach!!!
         Object.entries(costob).forEach( ([cost_type, cost_count]) => {
-          if (get()[cost_type] < cost_count) {
+          if (!get().affordPartialCost(type, cost_type, suffix)) {
             can_afford = false;
           }
         })
