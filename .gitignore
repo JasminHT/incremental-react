@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+src/components/Button.js
+incremental.sublime-workspace
+.gitignore
