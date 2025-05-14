@@ -26,6 +26,7 @@ export default function Fabricator( {type, label, color} ) {
 
   const totalProgress = 100;
 
+  //Button becomes grayed out and cannot be clicked
   function buttonDisabled() {
     if (!affordCost()) return true;
     if (isBuilding) return true;
@@ -36,8 +37,8 @@ export default function Fabricator( {type, label, color} ) {
   
   function start() {
     if (resourceMax >= resource + 1) {
-      payCost();
       setBuilding( true );
+      payCost();
     }
   }
 
@@ -48,11 +49,13 @@ export default function Fabricator( {type, label, color} ) {
     setBuilding( false );
   }
 
+  //Automatically start fabricating if toggle is on and resources available
   useEffect(() => {
     if (autoFabricate && !buttonDisabled()) {
+      console.log('autostart'); //this is launching multiple times
       start();
     }
-  }, [autoFabricate, isBuilding, resource, resourceMax, gameState]);
+  }, [autoFabricate, isBuilding, gameState]);
 
  
   useInterval(step, isBuilding ? 20 : null);
@@ -71,15 +74,10 @@ export default function Fabricator( {type, label, color} ) {
 
       { (isBuilding) ? 
         
-        <BoostButton 
-          type={type} 
-          progress={progress} 
-          setProgress={setProgress}/>
-      :
+        <BoostButton type={type} progress={progress} setProgress={setProgress}/>
+      :  //One or the
         <Button
-          hoverText={getCost()} 
-          hoverColor={buttonDisabled() ? 'red':'black'} 
-          disabled={buttonDisabled()} 
+          hoverText={getCost()} hoverColor={buttonDisabled() ? 'red':'black'} disabled={buttonDisabled()} 
           onClick={start} >
             {label}
           </Button>
