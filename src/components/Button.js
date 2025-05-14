@@ -4,7 +4,7 @@ import { useHover } from 'usehooks-ts';
 import { useHoverText } from '../hooks/useHoverText.js'
 
 
-export default function Button ({text, disabled, hoverText, onClick }) {
+export default function Button ({disabled, hoverText, hoverColor, onClick, children }) {
 
   const {setHoverText, clearHoverText} = useHoverText();
 
@@ -14,7 +14,7 @@ export default function Button ({text, disabled, hoverText, onClick }) {
   //detecting mouse hovers and leaves
   useEffect(() => {
     if (isHover)
-      setHoverText(hoverText);
+      setHoverText(hoverText, hoverColor);
     else
       clearHoverText();
   }, [isHover, hoverText] );
@@ -23,7 +23,7 @@ export default function Button ({text, disabled, hoverText, onClick }) {
   return (
       <div className='Button'>
         <button ref={hoverRef} disabled={disabled} onClick={onClick} >
-          {text}
+          {children}
         </button>
         <br/>
       </div>

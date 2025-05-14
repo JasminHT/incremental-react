@@ -30,7 +30,7 @@ export default function Fabricator( {type, label, color} ) {
 
     return false;
   }
-
+  
   function start() {
     if (resourceMax >= resource + 1) {
       payCost();
@@ -56,14 +56,29 @@ export default function Fabricator( {type, label, color} ) {
 
   return (
     <div className='Fabricator'>
+
       <Counter value={resource} max={resourceMax} />
+
       { (isBuilding) ? 
-        <BoostButton type={type} progress={progress} setProgress={setProgress}/>
+        
+        <BoostButton 
+          type={type} 
+          progress={progress} 
+          setProgress={setProgress}/>
       :
-        <Button text={label} hoverText={getCost()} disabled={buttonDisabled()} onClick={start} />
+        <Button
+          hoverText={getCost()} 
+          hoverColor={buttonDisabled() ? 'red':'black'} 
+          disabled={buttonDisabled()} 
+          onClick={start} >
+            {label}
+          </Button>
       }
       
-      <LoadBar progress={progress} totalProgress={totalProgress} color={color}  />
+      <LoadBar progress={progress} 
+        totalProgress={totalProgress} 
+        color={color}  />
+
       <MaxButton type={type} />  
     </div>
   )

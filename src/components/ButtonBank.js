@@ -34,7 +34,7 @@ export default function ButtonBank () {
 
   return (
     <>
-        <Button text="Reset" onClick={reset} />
+        <Button onClick={reset}> Reset </Button>
         <br/>
 
         <Miner type="energy" color="blue" />
