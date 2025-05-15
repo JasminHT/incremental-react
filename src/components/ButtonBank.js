@@ -5,7 +5,7 @@ import useInterval from 'hooks/useInterval.js';
 import Button from './Button.js';
 import Fabricator from './Fabricator.js';
 import Miner from './Miner.js';
-import Hint from './Hint.js'
+import ObjectHint from './ObjectHint.js';
 
 import {useResource, useGameState} from 'hooks/useGameState.js';
 
@@ -46,8 +46,8 @@ export default function ButtonBank () {
         <Fabricator label='Solar panels' type='solar_panel' color='red' />    
         <Fabricator label='Scrap generator' type='scrap_generator' color='black' />      
 
-        <Hint />
-    </>
+        <ObjectHint />
+      </>
   );
 };
 

@@ -77,7 +77,7 @@ export default function Fabricator( {type, label, color} ) {
         <BoostButton type={type} progress={progress} setProgress={setProgress}/>
       :  //One or the
         <Button type={type}
-          hoverCost={getCost()} hoverColor={buttonDisabled() ? 'red':'black'} disabled={buttonDisabled()} 
+          cost={getCost()} hoverColor={buttonDisabled() ? 'red':'black'} disabled={buttonDisabled()} 
           onClick={start} >
             {label}
           </Button>
