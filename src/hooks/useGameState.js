@@ -53,6 +53,14 @@ const initialState = {
   solar_panel: 0, solar_panel_max: 10,
   scrap_generator: 0, scrap_generator_max: 10,
 
+  unlockedFabricators: {
+    scrap_metal: false,
+    battery: false,
+    crankbot: false,
+    duranium: false,
+    solar_panel: false,
+    scrap_generator: false,
+  },
 }
 
 export const useGameState = create(immer(persist(
@@ -155,11 +163,14 @@ export const useGameState = create(immer(persist(
         })
         return cost_string;
       }
-    }
+    },
 
 
-
-
+    unlockFabricator: function(type) {
+      set(state => {
+        state.unlockedFabricators[type] = true;
+      });
+    },
 
   }),
 
