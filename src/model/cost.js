@@ -29,7 +29,8 @@ const new_costs_json = {
     crankbot_max_increase: {energy: 30},
     duranium_max_increase: {energy: 40},
     solar_panel_max_increase: {energy: 50},
-    scrap_generator_max_increase: {energy: 60}
+    scrap_generator_max_increase: {energy: 60},
+
 
 
   }
