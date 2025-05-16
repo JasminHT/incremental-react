@@ -44,14 +44,21 @@ export function useWholeState() {
 
 const initialState = {
 
-  resource: 0, resource_max: {base: 100, increment: 20, bonuses: 0},
-  energy: 0, energy_max: 100, 
-  scrap_metal: 0, scrap_metal_max: 20,
-  battery: 0, battery_max: 20, 
-  crankbot: 1, crankbot_max: 10,
-  duranium: 0, duranium_max: 20,
-  solar_panel: 0, solar_panel_max: 10,
-  scrap_generator: 0, scrap_generator_max: 10,
+  energy: 0, 
+  scrap_metal: 0, 
+  battery: 0, 
+  crankbot: 1, 
+  duranium: 0, 
+  solar_panel: 0, 
+  scrap_generator: 0, 
+
+  energy_max: 100, 
+  scrap_metal_max: 20,
+  battery_max: 20, 
+  crankbot_max: 10,
+  duranium_max: 20,
+  solar_panel_max: 10,
+  scrap_generator_max: 10,
 
   unlockedFabricators: {
     scrap_metal: false,
@@ -61,6 +68,8 @@ const initialState = {
     solar_panel: false,
     scrap_generator: false,
   },
+
+
 }
 
 export const useGameState = create(immer(persist(
