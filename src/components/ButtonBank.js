@@ -28,7 +28,7 @@ export default function ButtonBank () {
     scrap_metal: { energy: 10 },
     battery: { scrap_metal: 5 },
     crankbot: { battery: 1 },
-    duranium: {crankbot: 1},
+    duranium: {crankbot: 2},
     solar_panel: {duranium: 1},
     scrap_generator: {solar_panel: 1},
   };
