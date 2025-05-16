@@ -128,20 +128,17 @@ export const useGameState = create(immer(persist(
 
     affordCost: function(type, suffix="") {
     
-      suffix = suffix ? "_"+suffix : ""
-
-      let can_afford = true; //changes to false if the price is too high
-
       return () => {      
+        suffix = suffix ? "_"+suffix : ""
         let costob = cost(type+suffix) || ""; 
+        let can_afford = true; //changes to false if the price is too high
 
         if (!costob) {
           can_afford = false;
         }     
 
-        //you cannot return from inside a forEach!!!
         Object.entries(costob).forEach( ([cost_type, cost_count]) => {
-          if (!get().affordPartialCost(type, cost_type, suffix)) {
+          if (get()[cost_type] < costob[cost_type] ) {
             can_afford = false;
           }
         })

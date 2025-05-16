@@ -31,12 +31,11 @@ export default function Fabricator( {type, label, color} ) {
     if (!affordCost()) return true;
     if (isBuilding) return true;
     if ( resource >= resourceMax ) return true;
-
     return false;
   }
   
   function start() {
-    if (resourceMax >= resource + 1) {
+    if (resourceMax >= resource + 1 && !isBuilding) {
       setBuilding( true );
       payCost();
     }
@@ -49,21 +48,17 @@ export default function Fabricator( {type, label, color} ) {
     setBuilding( false );
   }
 
-  //Automatically start fabricating if toggle is on and resources available
-  useEffect(() => {
+  useInterval(step, isBuilding ? 20 : 20);
+  function step() { 
+    if (isBuilding) {
+      if (progress >= totalProgress) 
+        complete();
+      else 
+        setProgress( progress+1 );
+    }
     if (autoFabricate && !buttonDisabled()) {
-      console.log('autostart'); //this is launching multiple times
       start();
     }
-  }, [autoFabricate, isBuilding, gameState]);
-
- 
-  useInterval(step, isBuilding ? 20 : null);
-  function step() { 
-    if (progress >= totalProgress) 
-      complete();
-    else 
-      setProgress( progress+1 );
   }
 
 
